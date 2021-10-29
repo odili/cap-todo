@@ -1,20 +1,19 @@
-import schema from './schema';
+// import schema from './schema';
 import { handlerPath } from '@libs/handlerResolver';
 
 export default {
   handler: `${handlerPath(__dirname)}/handler.main`,
   events: [
     {
-      http: {
-        method: 'patch',
-        path: 'todos/{todoId}',
-        cors: true,
-        authorizer: 'auth0Authorizer',
-        request: {
-          schemas: {
-            'application/json': schema
-          }
-        }
+      httpApi: {
+        method: 'PATCH',
+        path: '/todos/{todoId}',
+        authorizer: 'auth0'
+        // request: {
+        //   schemas: {
+        //     'application/json': schema
+        //   }
+        // }
       }
     }
   ],

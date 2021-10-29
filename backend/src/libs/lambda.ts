@@ -6,10 +6,6 @@ import httpErrorHandler from '@middy/http-error-handler';
 export const middyfy = (handler) => {
   return middy(handler)
     .use(middyJsonBodyParser())
-    .use(
-      cors({
-        credentials: true
-      })
-    )
+    .use(cors({ credentials: true }))
     .use(httpErrorHandler());
 };

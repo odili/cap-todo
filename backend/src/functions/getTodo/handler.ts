@@ -1,4 +1,5 @@
-import type { ValidatedEventAPIGatewayProxyEvent } from '@libs/apiGateway';
+// import type { ValidatedEventAPIGatewayProxyEvent } from '@libs/apiGateway';
+import { APIGatewayProxyHandlerV2 } from 'aws-lambda';
 import { middyfy } from '@libs/lambda';
 import { getUserId } from 'src/auth/utils';
 import { getOne } from 'src/businessLogic/todos';
@@ -7,11 +8,9 @@ import { createLogger } from 'src/utils/logger';
 
 const logger = createLogger('getTodo');
 
-const getTodo: ValidatedEventAPIGatewayProxyEvent<typeof schema> = async (
-  event
-) => {
+const getTodo: APIGatewayProxyHandlerV2<typeof schema> = async (event) => {
   const todoId = event.pathParameters.todoId;
-  const userId = getUserId(event.headers.Authorization) as string;
+  const userId = getUserId(event.headers.authorization) as string;
 
   logger.info('Fetching todo for: ', { userId });
 

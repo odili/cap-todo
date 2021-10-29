@@ -1,0 +1,14 @@
+{
+  "serverlessConsole.services": [
+    {
+      "type": "serverlessFramework",
+      "title": null,
+      "awsProfile": "default",
+      "cwd": "./backend/",
+      "command": "serverless print",
+      "timeOffsetInMs": 0,
+      "envVars": [],
+      "stages": ["dev"]
+    }
+  ]
+}

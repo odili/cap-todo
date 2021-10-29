@@ -5,11 +5,10 @@ export default {
   handler: `${handlerPath(__dirname)}/handler.main`,
   events: [
     {
-      http: {
-        method: 'delete',
-        path: 'todos/{todoId}',
-        cors: true,
-        authorizer: 'auth0Authorizer'
+      httpApi: {
+        method: 'DELETE',
+        path: '/todos/{todoId}',
+        authorizer: 'auth0'
       }
     }
   ],

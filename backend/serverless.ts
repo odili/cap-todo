@@ -5,13 +5,13 @@ import TodoResources from './src/resources';
 
 const serverlessConfiguration: AWS = {
   service: 'serverless-todo',
-  frameworkVersion: '2',
+  frameworkVersion: '2.63.0',
   variablesResolutionMode: '20210326',
   package: { individually: true },
   plugins: [
     'serverless-esbuild',
-    'serverless-iam-roles-per-function',
-    'serverless-plugin-tracing'
+    'serverless-iam-roles-per-function'
+    // 'serverless-plugin-tracing'
   ],
   custom: {
     esbuild: {
@@ -34,10 +34,31 @@ const serverlessConfiguration: AWS = {
     region: 'us-east-2',
     stage: "${opt: stage, 'dev'}",
     lambdaHashingVersion: '20201221',
-    tracing: { lambda: true, apiGateway: true },
-    apiGateway: {
-      minimumCompressionSize: 1024,
-      shouldStartNameWithService: true
+    logs: { httpApi: true },
+    // tracing: { lambda: true, apiGateway: true },
+    // apiGateway: {
+    //   minimumCompressionSize: 1024,
+    //   shouldStartNameWithService: true
+    // },
+    httpApi: {
+      cors: {
+        allowCredentials: true,
+        allowedOrigins: ['http://*', 'https://*'],
+        allowedMethods: ['*'],
+        allowedHeaders: ['*'],
+        exposedResponseHeaders: ['*'],
+        maxAge: 360
+      },
+      metrics: true,
+      authorizers: {
+        auth0: {
+          type: 'jwt',
+          identitySource: '$request.header.Authorization',
+          issuerUrl: 'https://dev-gqta1g1g.us.auth0.com/',
+          audience: ['https://use-our-Todo-App']
+          // audience: ['https://dev-gqta1g1g.us.auth0.com/api/v2/']
+        }
+      }
     },
     environment: {
       AWS_NODEJS_CONNECTION_REUSE_ENABLED: '1',
@@ -48,7 +69,6 @@ const serverlessConfiguration: AWS = {
         '381183617689-todo-app-images-${self:provider.stage}',
       SINGNED_URL_EXPIRATION: '300'
     },
-    logs: { restApi: true },
     iam: {
       role: {
         statements: [

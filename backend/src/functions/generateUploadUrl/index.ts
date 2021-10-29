@@ -5,11 +5,10 @@ export default {
   handler: `${handlerPath(__dirname)}/handler.main`,
   events: [
     {
-      http: {
-        method: 'patch',
-        path: 'todos/{todoId}/attachment',
-        cors: true,
-        authorizer: 'auth0Authorizer'
+      httpApi: {
+        method: 'PATCH',
+        path: '/todos/{todoId}/attachment',
+        authorizer: 'auth0'
       }
     }
   ],

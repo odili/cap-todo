@@ -1,4 +1,4 @@
-import auth0Authorizer from './auth0Authorizer';
+// import auth0Authorizer from './auth0Authorizer';
 import createTodo from './createTodo';
 import deleteTodo from './deleteTodo';
 import getTodos from './getTodos';
@@ -7,7 +7,7 @@ import updateTodo from './updateTodo';
 import generateUploadUrl from './generateUploadUrl';
 
 export default {
-  auth0Authorizer,
+  // auth0Authorizer,
   createTodo,
   deleteTodo,
   getTodos,
