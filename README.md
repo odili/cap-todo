@@ -1,11 +1,11 @@
 # Capstone Project Based on Serverless TODO
 
-This project is based on the archtecture described in the serverless Todo below with the following modifications:
+This project is based on the architecture described in the serverless Todo below with the following modifications:
 
 - Backend:
   - Implemented the new AWS ApiGatewayv2 (HTTP)
   - Moved Authentication to the Gateway from the Lambda
-  - Implmented Auth0 API for the App as required by ApiGatewayv2
+  - Implemented Auth0 API for the App as required by ApiGatewayv2
   - Implemented AWS SDK v3
 - Frontend:
   - Implemented a totally new frontend based on React Hooks
@@ -19,7 +19,7 @@ This project is based on the archtecture described in the serverless Todo below 
   - ApiGatewayv2 does not have support for XRAY SDK yet, so `Distributed tracing ` is not possible yet
   - I have also moved request(body) Validation to the Lambas as Request Validation is not possible on ApiGatewayv2
 - Frontend:
-  - Testing the new UI requires the user to allow pop-up for `localhost`. The new Auth0 React SDK does not allow `getAccessTokenSilently` for localhost connections. So the request for the SPA to connect to the backend API requires user consent which have to given by a dialog. This is a one time requirement only. For more info see: <a href="https://auth0.com/docs/api-auth/user-consent" target="_blank">https://auth0.com/docs/api-auth/user-consent</a>
+  - Testing the new UI requires the user to allow a pop-up for `localhost`. The new Auth0 React SDK does not allow `getAccessTokenSilently` for localhost connections. So the request for the SPA to connect to the backend API requires user consent which has to be given by a dialog. This is a one-time requirement only. For more info see: <a href="https://auth0.com/docs/api-auth/user-consent" target="_blank">https://auth0.com/docs/api-auth/user-consent</a>
 
 # Serverless TODO
 
