@@ -15,8 +15,9 @@ const getTodo: APIGatewayProxyHandlerV2<typeof schema> = async (event) => {
   logger.info('Fetching todo for: ', { userId });
 
   const result = await getOne({ userId, todoId });
+  logger.info('Result: ', result);
 
-  if (Boolean(result.Item)) {
+  if (!Boolean(result.Item)) {
     return {
       statusCode: 404,
       body: JSON.stringify({ error: `Todo id ${todoId} not found` })

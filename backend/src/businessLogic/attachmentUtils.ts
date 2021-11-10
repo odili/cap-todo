@@ -1,12 +1,15 @@
-import * as AWS from 'aws-sdk';
-import * as AWSXRay from 'aws-xray-sdk';
+// import * as AWS from 'aws-sdk';
+// import * as AWSXRay from 'aws-xray-sdk';
 
-const XAWS = AWSXRay.captureAWS(AWS);
+// const XAWS = AWSXRay.captureAWS(AWS);
+import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3';
+import { getSignedUrl } from '@aws-sdk/s3-request-presigner';
 import { TodosAccess } from 'src/dataLayer/TodosAccess';
 import { GetTodoParams } from 'src/models/Todo';
 const todoAccess = new TodosAccess();
 
-const s3 = new XAWS.S3({ signatureVersion: 'v4' });
+// const s3 = new XAWS.S3({ signatureVersion: 'v4' });
+const s3 = new S3Client({});
 
 // TODO: Implement the fileStogare logic
 
@@ -19,13 +22,16 @@ export async function todoExists(params: GetTodoParams) {
   return Boolean(result.Item);
 }
 
-export function createAttachmentPresignedUrl(todoId: string) {
+export async function createAttachmentPresignedUrl(todoId: string) {
   const imageUrl = `https://${bucketName}.s3.amazonaws.com/${todoId}`;
-  const uploadUrl = s3.getSignedUrl('putObject', {
-    Bucket: bucketName,
-    Key: todoId,
-    Expires: parseInt(urlExpiration)
-  });
+  const uploadUrl = await getSignedUrl(
+    s3,
+    new PutObjectCommand({
+      Bucket: bucketName,
+      Key: todoId
+    }),
+    { expiresIn: parseInt(urlExpiration) }
+  );
 
   return { imageUrl, uploadUrl };
 }

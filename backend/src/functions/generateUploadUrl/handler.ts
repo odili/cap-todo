@@ -28,7 +28,7 @@ const generateUploadUrl: APIGatewayProxyHandlerV2<typeof schema> = async (
   }
   logger.info('Generating uploadUrl for todo: ', { todo: todoId });
 
-  const { uploadUrl, imageUrl } = createAttachmentPresignedUrl(todoId);
+  const { uploadUrl, imageUrl } = await createAttachmentPresignedUrl(todoId);
 
   await updateAttachmentUrl({ userId, todoId, imageUrl });
 

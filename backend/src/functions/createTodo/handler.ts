@@ -1,4 +1,5 @@
 import Ajv from 'ajv';
+import middyJsonBodyParser from '@middy/http-json-body-parser';
 import { middyfy } from '@libs/lambda';
 import { APIGatewayProxyHandlerV2 } from 'aws-lambda';
 import schema from './schema';
@@ -10,7 +11,7 @@ const logger = createLogger('createTodo');
 const ajv = new Ajv();
 const validate = ajv.compile(schema);
 const createTodo: APIGatewayProxyHandlerV2<typeof schema> = async (event) => {
-  // logger.info(event.body);
+  logger.info(event.body);
   const draftTodo = event.body;
   if (!validate(draftTodo)) {
     return {
@@ -31,4 +32,4 @@ const createTodo: APIGatewayProxyHandlerV2<typeof schema> = async (event) => {
   };
 };
 
-export const main = middyfy(createTodo);
+export const main = middyfy(createTodo).use(middyJsonBodyParser())

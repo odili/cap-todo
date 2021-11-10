@@ -1,4 +1,5 @@
 import Ajv from 'ajv';
+import middyJsonBodyParser from '@middy/http-json-body-parser';
 import { APIGatewayProxyHandlerV2 } from 'aws-lambda';
 import { middyfy } from '@libs/lambda';
 import { updateTodo as editTodo } from 'src/businessLogic/todos';
@@ -36,4 +37,4 @@ const updateTodo: APIGatewayProxyHandlerV2<typeof schema> = async (event) => {
   };
 };
 
-export const main = middyfy(updateTodo);
+export const main = middyfy(updateTodo).use(middyJsonBodyParser());
